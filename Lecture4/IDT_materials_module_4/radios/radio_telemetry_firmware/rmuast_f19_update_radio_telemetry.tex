@@ -1,0 +1,95 @@
+\documentclass[a4paper,10pt,fleqn]{article}
+
+%%% Packages
+\usepackage{graphicx} % use graphics
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{multicol}
+\usepackage{placeins} % \FloatBarrier (sudo apt install texlive-latex-extra)
+\usepackage[bottom]{footmisc} % avoid images below footnotes
+\usepackage[utf8]{inputenc}
+%\usepackage[danish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{ctable} % for \specialrule command
+\usepackage{caption} % for setting caption width
+
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+
+%%% Modify page layout
+\setlength{\textwidth}{160 mm} % line width
+\setlength{\oddsidemargin}{0 mm}  % left margin
+\setlength{\topmargin}{-1.5 cm} % top margin
+\setlength{\textheight}{25.0 cm} % page width
+%\pagestyle{empty} % remove page numbers
+\setlength{\parindent}{0 mm} % indent at the beginning of a paragraph
+\setlength{\parskip}{2 mm} % vertical distance between paragraphs
+
+% fancy header
+\usepackage{fancyhdr}
+\newcommand{\CourseNumber}{SDU UAS Center}%
+\newcommand{\CourseTitle}{Introduction to UAS Techology (RMUAST Spring 2019)}%
+\newcommand{\Author}{Frederik Mazur Andersen}%
+\pagestyle{fancy}
+\lhead{\bfseries \CourseNumber} 
+\chead{} 
+\rhead{\bfseries \CourseTitle} 
+\lfoot{} 
+\cfoot{} 
+\rfoot{Page \thepage} 
+
+%\renewcommand{\footnotesize}{\scriptsize}
+
+% Text fonts
+\usepackage{palatino}
+
+\usepackage[hyperindex=true,pdftitle={},pdfauthor={},colorlinks=true,
+pagebackref=false,citecolor=blue,linkcolor=blue, urlcolor=blue, plainpages=false,
+%pagebackref=false,citecolor=black,linkcolor=black, urlcolor=black, plainpages=false,
+pdfpagelabels]{hyperref} % colourlinks=false for printing
+
+\usepackage[round,colon,authoryear]{natbib}
+\usepackage[htt]{hyphenat}
+
+\begin{document}
+
+\vspace*{5mm}
+
+\LARGE
+\begin{center}Flash firmware on telemetry modules
+
+\normalsize
+\vspace{2mm}
+Frederik Mazur Andersen \href{mailto:fm@mmmi.sdu.dk}{fm@mmmi.sdu.dk}
+
+\vspace {3mm}
+\end{center}
+
+\normalsize
+\vspace{5mm}
+\FloatBarrier
+
+
+\section{Flash telemetry modules}
+In order to show the current telemetry and not the average rssi a change has been made in the firmware of the radio modules. To flash your telemetry modules with the new firmware following the steps below.
+
+\begin{enumerate}
+\item Download and extract the zip file from blackboard.
+\item Go into the downloaded folder in terminal
+\item Make sure only one telemetry module is connected though usb. (Should be port ttyUSB0)
+\item install pexpect with: \texttt{pip install pexpect} If running Ubuntu 16.04 you might have to run \texttt{pip install --upgrade pexpect} to get the latest version.\footnote{Ensure it gets installed for Python 2.7. You might have to use \texttt{pip2} instead.} 
+% Need to use -{}- to stop latex making -- into a single line. 
+\item Run command: \texttt{python sik\_uploader.py -{}-port /dev/ttyUSB0 -{}-baudrate 57600 radio\_hm\_trp\_2.0\_current\_rssi.ihx}
+\item Repeat for second module. Both modules needs to be flashed. 
+\item Setup both modules though apm-planner again as instructed in the weekly notes. 
+\end{enumerate}
+
+
+%\bibliographystyle{plainnat}
+%\bibliography{kj_nourls} 
+
+\end{document}
+
+
