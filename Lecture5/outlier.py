@@ -7,7 +7,7 @@ ff = open("UTM_positions_corrected.csv" ,'a');
 
 dt = 1/100;	# Hz
 velocity = 1.66 #m/s
-magArray = [];
+
 i = 0;
 c_old = 0
 c_new = 0
