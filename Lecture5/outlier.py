@@ -26,6 +26,12 @@ for line in f :
 		ff.write(str(y));
 		ff.write(',');
 		ff.write(str(z));
+		ff.write(",")
+		ff.write(csv[3])
+		ff.write(",")
+		ff.write(csv[4])
+		ff.write(",");
+		ff.write(csv[5])
 		ff.write('\n');
 	elif(i == 0):
 		ff.write(str(x));
@@ -33,6 +39,12 @@ for line in f :
 		ff.write(str(y));
 		ff.write(',');
 		ff.write(str(z));
+		ff.write(",")	
+		ff.write(csv[3])
+		ff.write(",")
+		ff.write(csv[4])
+		ff.write(",")
+		ff.write(csv[5])		
 		ff.write('\n');
 	
 	c_old = c_new
