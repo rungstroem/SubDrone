@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-f = open("UTM_positions.csv","r")
-ff = open("geo_pos.csv", "a")
+f = open("UTM_simplified.csv","r")
+ff = open("geo_pos.csv", "w")
 
 from utm import utmconv
 from math import pi, cos, acos, sin, atan2, sqrt
@@ -21,9 +21,9 @@ for line in f:
 	# convert back from UTM to geodetic
 	(lat2, lon2) = uc.utm_to_geodetic (hemisphere, zone, e2, n2)
 	
-	ff.write(str(e2))
+	ff.write(str(lat2))
 	ff.write(",")
-	ff.write(str(n2))
+	ff.write(str(lon2))
 	ff.write(",")
 	ff.write(str(z))
 	ff.write("\n")
