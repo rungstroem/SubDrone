@@ -23,16 +23,26 @@ for line in f:
 		lon = float(csv[0])
 		lat = float(csv[1])
 		height = float(csv[2])	
-	item = {}
-	item['autoContinue'] = True
-	item['command'] = 22
-	item['doJumpId'] = 1
-	item['frame'] = 3
-	item['params'] = [0,0,0,0,float(csv[0]),float(csv[1]),50] # maybe change the last parameter to float(csv[3]) to get the height we got
-	item['type'] = 'SimpleItem'
-	items.append (item)
-	count += 1 
+	elif(count == 1):
+		item= {}
+		item['autoContinue'] = True
+		item['command'] = 22
+		item['doJumpId'] = count
+		item['frame'] = 3
+		item['params'] = [0,0,0,0,float(csv[0]),float(csv[1]),50] # maybe change the last parameter to float(csv[3]) to get the height we got
+		item['type'] = 'SimpleItem'
+		items.append (item)
+	else:
+		item= {}
+		item['autoContinue'] = True
+		item['command'] = 16
+		item['doJumpId'] = count
+		item['frame'] = 3
+		item['params'] = [0,0,0,0,float(csv[0]),float(csv[1]),50] # maybe change the last parameter to float(csv[3]) to get the height we got
+		item['type'] = 'SimpleItem'
+		items.append (item)
 
+	count += 1 
 
 
 mission = {}
