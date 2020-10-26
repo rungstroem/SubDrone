@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-# implementation of a cubic hermite spline
-f = open("convert_u/UTM_simplified.csv","r")
-ff = open("fixed_wing.csv","w")
-
 # load modules
 from math import pi
 import matplotlib.pyplot as plt
 from pylab import *
 import numpy as np
+import os 
+
+# implementation of a cubic hermite spline
+f = open("convert_u/UTM_positions.csv", "r")
+ff = open("fixed_wing.csv","w")
+
 
 #global vars
 points = []
@@ -16,13 +18,14 @@ count = 0
 leftovers = []
 p0 = []
 pn = []
+f_len = os.path.getsize('convert_u/UTM_positions.csv')
 #Homademade
 def write_to_file(points_list):
 	ff.write(str(points_list[0]))
 	ff.write(",")
 	ff.write(str(points_list[1]))
 	ff.write(",")
-	ff.write(str(points_lists[2]))
+	ff.write(str(points_list[2]))
 	ff.write(",")
 	ff.write(str(points_list[3]))
 	ff.write(",")
@@ -86,7 +89,7 @@ for line in f:
 		p.append(csv[5])
 		write_to_file(p)
 		p0 = [float(csv[0]),float(csv[1])]
-	elif(count == len(f)):
+	elif(count == f_len):
 		p = []
 		p.append(csv[0])
 		p.append(csv[1])
@@ -99,21 +102,24 @@ for line in f:
 	else:
 		leftovers.append(csv[2])	
 		leftovers.append(csv[4])
+		leftovers.append(csv[3])	
 		leftovers.append(csv[5])
-		points.append(csv[0])
-		points.append(csv[1])
+		points.append(float(csv[0]))
+		points.append(float(csv[1]))
 	count =+ 1
-
 
 chs = cubic_hermite_spline()
 points_arr = np.array(points).reshape(int(len(points)/2),2)
 lefto_arr = np.array(leftovers).reshape(int(len(leftovers)/4),4)
-
-for i in range(len(points_arr)):	
+for i in range(len(points_arr)-1):	
 	if(int(i) == 0): 
 		p1 = p0
+		p2 = points_arr[i]
+		p3 = points_arr[i+1]
 	elif(int(i) == len(points_arr)):
-		p4 = pn
+		p1 = points_arr[i-1]
+		p2 = points_arr[i]
+		p3 = pn
 	else:
 		p1 = points_arr[i-1]
 		p2 = points_arr[i]
@@ -125,13 +131,13 @@ for i in range(len(points_arr)):
 
 	rte = chs.goto_wpt (p1,t1,p2,t2,steps)
 	p = []
-	for k in steps:
-		p.append(rte[k,0])
-		p.append(rte[k,1])
-		p.append(leftovers[i,0])
-		p.append(leftovers[i,1])
-		p.append(leftovers[i,2])
-		p.append(leftovers[i,3])
+	for k in range(steps):
+		p.append(rte[int(k)][0])
+		p.append(rte[int(k)][1])
+		p.append(lefto_arr[int(i)][0])
+		p.append(lefto_arr[int(i)][1])
+		p.append(lefto_arr[int(i)][2])
+		p.append(lefto_arr[int(i)][3])
 	write_to_file(p)
 
 f.close()
